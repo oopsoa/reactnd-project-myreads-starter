@@ -1,20 +1,17 @@
 // Core
-import React, { Component } from 'react'
+import React from 'react'
 
-export default class Book extends Component {
-
-  render() {
-    const { context, authors, title, cover, shelf, select, id, onUpdateShelf } = this.props
+const Book = function(props){
     let toShelf
 
-    if (context === 'search') {
-      shelf.forEach((b) => {
-        if (b.id === id && b.shelf !== undefined) {
+    if (props.context === 'search') {
+      props.shelf.forEach((b) => {
+        if (b.id === props.id && b.shelf !== undefined) {
           toShelf = b.shelf
         }
       })
     } else {
-      toShelf = select
+      toShelf = props.select
     }
     return(
       <li>
@@ -22,18 +19,18 @@ export default class Book extends Component {
           <div className="book-top">
             <div className="book-cover">
             
-              { cover !== undefined ?
-                <img src={ cover.thumbnail }
-                     alt={ title + ' cover' } />
+              { props.cover !== undefined ?
+                <img src={ props.cover.thumbnail }
+                     alt={ props.title + ' cover' } />
                 :
                 <img src='https://dummyimage.com/138x203/b3b3b3/ffffff.png&text=not+available'
-                     alt={ title + ' cover' } />
+                     alt={ props.title + ' cover' } />
               }
 
             </div>
 
             <div className="book-shelf-changer">
-              <select defaultValue={ toShelf !== undefined ? toShelf : 'none' } onChange={ (e) => onUpdateShelf(id, e.target.value) } >
+              <select defaultValue={ toShelf !== undefined ? toShelf : 'none' } onChange={ (e) => props.onUpdateShelf(props.id, e.target.value) } >
                 <option disabled>Move to...</option>
                 <option value="currentlyReading">Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>
@@ -44,10 +41,10 @@ export default class Book extends Component {
 
           </div>
 
-          { title !== undefined && (
+          { props.title !== undefined && (
             <div className="book-title">
-              { title }
-              { toShelf !== undefined && context === 'search' && (
+              { props.title }
+              { props.toShelf !== undefined && props.context === 'search' && (
                 <span className='book-checkmark'>
                   
                 </span>
@@ -55,9 +52,9 @@ export default class Book extends Component {
             </div>
           )}
 
-          { authors !== undefined &&
-            authors.map((athor) => (
-              <div key={ athor } className="book-authors">{ athor }</div>
+          { props.authors !== undefined &&
+            props.authors.map((author) => (
+              <div key={ author } className="book-authors">{ author }</div>
             ))
           }
 
@@ -65,4 +62,5 @@ export default class Book extends Component {
       </li>
     )
   }
-}
+
+export default Book

@@ -4,16 +4,17 @@ import React, { Component } from 'react'
 // Components
 import Book from './Book.js'
 
-export default class Shelf extends Component {
+//export default class Shelf extends Component {
 
-  render() {
-    const { shelfName, books, ctxFilter, onUpdateShelf,  shelf } = this.props
+const Shelf = function(props){
+ // render() {
+   // const { shelfName, books, ctxFilter, onUpdateShelf,  shelf } = this.props
 
-    let theseBooks = books.filter((book) => book.shelf === ctxFilter)
+    let theseBooks = props.books.filter((book) => book.shelf === props.ctxFilter)
 
     return(
       <div className="bookshelf">
-        <h2 className="bookshelf-title">{ shelfName }</h2>
+        <h2 className="bookshelf-title">{ props.shelfName }</h2>
         <div className="bookshelf-books">
           <ol className="books-grid">
             { theseBooks.length === 0 ?
@@ -30,9 +31,9 @@ export default class Shelf extends Component {
                 title={ book.title }
                 cover={ book.imageLinks }
                 select={ book.shelf }
-                shelf={ shelf }
+                shelf={ props.shelf }
                 id={ book.id }
-                onUpdateShelf={ onUpdateShelf }
+                onUpdateShelf={ props.onUpdateShelf }
                 key={ book.id } />
             ))}
           </ol>
@@ -40,4 +41,6 @@ export default class Shelf extends Component {
       </div>
     )
   }
-}
+//}
+
+export default Shelf

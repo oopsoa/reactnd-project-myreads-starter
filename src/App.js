@@ -16,13 +16,15 @@ import './App.css'
 
 export default class BooksApp extends Component {
 
-  state = {
+constructor(props){
+  super(props);
+  this.state = {
     books: [],
     searchBooks: [],
     loading: true,
     shelfMap: []
   }
-
+}
   componentDidMount() {
     this.getMyBooks()
   }
@@ -50,7 +52,11 @@ export default class BooksApp extends Component {
   search = (query) => {
     if(query.length !== 0) {
       BooksAPI.search(query).then((searchBooks) => {
-        this.setState({ searchBooks })
+        if (searchBooks.error) {
+          this.setState({
+            searchBooks: []
+          });}
+        else this.setState({ searchBooks })
       })
     } else {
       this.setState({ searchBooks: [] })
